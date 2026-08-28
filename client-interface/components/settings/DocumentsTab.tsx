@@ -196,6 +196,26 @@ export function DocumentsTab({ autoReplyEnabled = false, onAutoReplyChange }: Do
         </div>
       </div>
 
+      {/* Monthly auto-reply message quota — same visual language as AI Connections */}
+      {status?.usage && (
+        <div className="bg-card rounded-xl border border-slate-200 p-4 sm:p-5">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium text-slate-800">
+              {status.usage.sent} of {status.usage.limit} messages used this month
+            </span>
+          </div>
+          <div className="w-full bg-slate-100 rounded-full h-2.5">
+            <div
+              className={`h-2.5 rounded-full transition-colors ${
+                status.usage.sent >= status.usage.limit ? 'bg-red-500' : 'bg-brand-600'
+              }`}
+              style={{
+                width: `${Math.min(100, (status.usage.sent / Math.max(1, status.usage.limit)) * 100)}%`,
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* What auto reply needs, in the order it has to happen. Shown while
           anything is outstanding: a locked switch with no explanation is the
